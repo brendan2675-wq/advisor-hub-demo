@@ -1,7 +1,9 @@
+import React, { useState, useEffect, useRef } from 'react';
 import { useApp } from '@/context/AppContext';
 import { holdingsData, calculateHoldings, groupByAssetClass, HoldingWithCalculations } from '@/data/mockData';
 import { ColumnTooltip } from './ColumnTooltip';
 import { cn } from '@/lib/utils';
+import { Skeleton } from '@/components/ui/skeleton';
 
 function formatCurrency(value: number): string {
   return new Intl.NumberFormat('en-AU', {
@@ -20,8 +22,31 @@ function formatNumber(value: number): string {
   return new Intl.NumberFormat('en-AU').format(value);
 }
 
+function SkeletonRow({ columns }: { columns: number }) {
+  return (
+    <tr className="border-b border-border">
+      {Array.from({ length: columns }).map((_, i) => (
+        <td key={i} className="py-3 px-4">
+          <Skeleton className="h-4 w-full animate-shimmer" />
+        </td>
+      ))}
+    </tr>
+  );
+}
+
 export function HoldingsTable() {
   const { selectedClient, isDetailedView } = useApp();
+  const [isLoading, setIsLoading] = useState(false);
+  const prevClientRef = useRef(selectedClient.id);
+
+  useEffect(() => {
+    if (prevClientRef.current !== selectedClient.id) {
+      setIsLoading(true);
+      const timer = setTimeout(() => setIsLoading(false), 800);
+      prevClientRef.current = selectedClient.id;
+      return () => clearTimeout(timer);
+    }
+  }, [selectedClient.id]);
   
   const rawHoldings = holdingsData[selectedClient.id] || [];
   const holdings = calculateHoldings(rawHoldings, selectedClient.totalPortfolioValue);
@@ -37,7 +62,7 @@ export function HoldingsTable() {
   const columns = isDetailedView ? detailedColumns : compactColumns;
 
   const renderRow = (holding: HoldingWithCalculations) => (
-    <tr key={holding.id} className="border-b border-border hover:bg-muted/50 transition-colors duration-150">
+    <tr key={holding.id} className="border-b border-border hover:bg-muted/50 hover:border-l-2 hover:border-l-primary transition-all duration-100">
       <td className="py-3 px-4 text-sm text-foreground font-medium">{holding.name}</td>
       <td className="py-3 px-4 text-sm text-muted-foreground font-mono">{holding.code}</td>
       <td className="py-3 px-4 text-sm text-foreground text-right tabular-nums">{formatNumber(holding.units)}</td>
@@ -99,15 +124,22 @@ export function HoldingsTable() {
               ))}
             </tr>
           </thead>
-          <tbody>
-            {Object.entries(groupedHoldings).map(([assetClass, groupHoldings]) => {
-              const totals = calculateGroupTotals(groupHoldings);
-              const unrealisedPercent = totals.costBase > 0 
-                ? ((totals.unrealisedGainLoss / totals.costBase) * 100) 
-                : 0;
+          <tbody className={cn(isLoading ? "" : "animate-fade-in")}>
+            {isLoading ? (
+              <>
+                {[1, 2, 3, 4].map((i) => (
+                  <SkeletonRow key={i} columns={columns.length} />
+                ))}
+              </>
+            ) : (
+              Object.entries(groupedHoldings).map(([assetClass, groupHoldings]) => {
+                const totals = calculateGroupTotals(groupHoldings);
+                const unrealisedPercent = totals.costBase > 0 
+                  ? ((totals.unrealisedGainLoss / totals.costBase) * 100) 
+                  : 0;
 
-              return (
-                <React.Fragment key={assetClass}>
+                return (
+                  <React.Fragment key={assetClass}>
                   {/* Group Header */}
                   <tr className="bg-surface">
                     <td 
@@ -159,8 +191,9 @@ export function HoldingsTable() {
                     )}
                   </tr>
                 </React.Fragment>
-              );
-            })}
+                );
+              })
+            )}
           </tbody>
         </table>
       </div>
@@ -175,5 +208,3 @@ export function HoldingsTable() {
     </div>
   );
 }
-
-import React from 'react';

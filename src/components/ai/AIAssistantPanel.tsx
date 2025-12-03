@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Sparkles, X, FileText, TrendingUp, Mail, Send, Clock, ThumbsUp, Ban, ChevronRight, Bell } from 'lucide-react';
+import { Sparkles, X, FileText, TrendingUp, Mail, Send, Clock, ThumbsUp, Ban, ChevronRight, Bell, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useApp } from '@/context/AppContext';
 import { useAIInsights, Insight } from '@/hooks/useAIInsights';
@@ -9,9 +9,20 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
+function TypingIndicator() {
+  return (
+    <div className="flex items-center gap-1 p-2 bg-background rounded-lg max-w-[60px]">
+      <span className="w-2 h-2 bg-muted-foreground rounded-full animate-typing-dot" />
+      <span className="w-2 h-2 bg-muted-foreground rounded-full animate-typing-dot-2" />
+      <span className="w-2 h-2 bg-muted-foreground rounded-full animate-typing-dot-3" />
+    </div>
+  );
+}
+
 export function AIAssistantPanel() {
   const [isOpen, setIsOpen] = useState(false);
   const [chatInput, setChatInput] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
   const [chatMessages, setChatMessages] = useState<{ role: 'user' | 'ai'; content: string }[]>([
     { role: 'ai', content: "Hi! I'm your AI assistant. Ask me anything about your portfolio." }
   ]);
@@ -27,7 +38,7 @@ export function AIAssistantPanel() {
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [chatMessages]);
+  }, [chatMessages, isTyping]);
 
   const quickActions = [
     { label: 'Performance Report', icon: <TrendingUp className="w-4 h-4" /> },
@@ -37,7 +48,10 @@ export function AIAssistantPanel() {
   ];
 
   const handleQuickAction = (label: string) => {
-    showToast(`${label}...`);
+    showToast(`Generating ${label}...`);
+    setTimeout(() => {
+      showToast(`${label} ready! Downloading...`);
+    }, 1500);
   };
 
   const handleSendMessage = () => {
@@ -45,14 +59,17 @@ export function AIAssistantPanel() {
     
     setChatMessages(prev => [...prev, { role: 'user', content: chatInput }]);
     setChatInput('');
+    setIsTyping(true);
     
-    // Simulate AI response
+    // Simulate AI thinking delay (1-2 seconds for realism)
+    const delay = 1000 + Math.random() * 1000;
     setTimeout(() => {
+      setIsTyping(false);
       setChatMessages(prev => [...prev, { 
         role: 'ai', 
         content: "I'm analyzing your portfolio data. Based on current holdings, your asset allocation looks well-balanced with room for optimization in the fixed income sector." 
       }]);
-    }, 1000);
+    }, delay);
   };
 
   return (
@@ -71,7 +88,7 @@ export function AIAssistantPanel() {
           >
             <Sparkles className="w-7 h-7 text-white" />
             {totalBadgeCount > 0 && (
-              <span className="absolute -top-1 -right-1 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+              <span className="absolute -top-1 -right-1 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold animate-pulse-badge">
                 {totalBadgeCount > 9 ? '9+' : totalBadgeCount}
               </span>
             )}
@@ -156,7 +173,7 @@ export function AIAssistantPanel() {
                       <div
                         key={idx}
                         className={cn(
-                          "text-xs p-2 rounded-lg max-w-[90%]",
+                          "text-xs p-2 rounded-lg max-w-[90%] animate-fade-in",
                           msg.role === 'user'
                             ? "bg-primary text-primary-foreground ml-auto"
                             : "bg-background text-foreground"
@@ -165,6 +182,7 @@ export function AIAssistantPanel() {
                         {msg.content}
                       </div>
                     ))}
+                    {isTyping && <TypingIndicator />}
                     <div ref={chatEndRef} />
                   </div>
                   <div className="flex gap-2">
@@ -174,8 +192,9 @@ export function AIAssistantPanel() {
                       placeholder="Ask about your portfolio..."
                       className="text-xs h-8"
                       onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
+                      disabled={isTyping}
                     />
-                    <Button size="sm" className="h-8 w-8 p-0" onClick={handleSendMessage}>
+                    <Button size="sm" className="h-8 w-8 p-0" onClick={handleSendMessage} disabled={isTyping}>
                       <Send className="w-4 h-4" />
                     </Button>
                   </div>
