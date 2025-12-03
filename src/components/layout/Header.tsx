@@ -1,6 +1,7 @@
-import { Search, User, HelpCircle, ChevronDown, Check } from 'lucide-react';
+import { User, HelpCircle, ChevronDown, Check } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
 import dashLogo from '@/assets/dash-logo.png';
+import { SmartSearch } from '@/components/search/SmartSearch';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,15 +21,18 @@ export function Header() {
   const currentContext = contextOptions.find(opt => opt.value === contextMode);
 
   return (
-    <header className="h-16 border-b border-border bg-card flex items-center justify-between px-6 transition-colors duration-300">
+    <header className="h-16 border-b border-border bg-card flex items-center gap-6 px-6 transition-colors duration-300">
       {/* Logo */}
-      <div className="flex items-center">
+      <div className="flex items-center flex-shrink-0">
         <img src={dashLogo} alt="DASH" className="h-6" />
       </div>
 
+      {/* Smart Search */}
+      <SmartSearch />
+
       {/* Context Switcher */}
       <DropdownMenu>
-        <DropdownMenuTrigger className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-muted transition-colors duration-200 outline-none">
+        <DropdownMenuTrigger className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-muted transition-colors duration-200 outline-none flex-shrink-0">
           <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${
             contextMode === 'private' ? 'bg-private' : 'bg-retail'
           }`} />
@@ -55,10 +59,7 @@ export function Header() {
       </DropdownMenu>
 
       {/* Right Icons */}
-      <div className="flex items-center gap-1">
-        <button className="btn-icon">
-          <Search className="w-5 h-5 text-muted-foreground" />
-        </button>
+      <div className="flex items-center gap-1 flex-shrink-0">
         <button className="btn-icon">
           <User className="w-5 h-5 text-muted-foreground" />
         </button>
