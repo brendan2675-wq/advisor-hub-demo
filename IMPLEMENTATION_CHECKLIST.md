@@ -19,10 +19,11 @@ Use this document to verify all features from the original prompt have been impl
 ## Feature Checklist
 
 ### 1. Global Header with Context Switcher
-- [ ] DASH logo/text on the left
-- [ ] Dropdown showing: "Retail Clients", "Private Clients", "All Clients"
-- [ ] Icons on right: Search, User profile, Help (?)
-- [ ] Visual indicator changes based on context (teal vs navy)
+- [x] DASH logo/text on the left
+- [x] Dropdown showing: "Retail Clients", "Private Clients", "All Clients"
+- [x] Icons on right: Search, Notifications bell, User profile, Help (?)
+- [x] Visual indicator changes based on context (teal vs navy)
+- [x] No duplicate AI buttons (consolidated to FAB only)
 
 ### 2. Navigation (Updated to Horizontal Tabs)
 - [ ] Tab items: Dashboard, Portfolio, Performance, Gains & Losses, Transactions, Details, Reports
@@ -39,12 +40,16 @@ Use this document to verify all features from the original prompt have been impl
 - [ ] Export button with options: PDF, CSV
 
 **Compact Portfolio Table:**
-- [ ] Columns: Name, Code, Units, Price (AUD), Value (AUD), Port%
-- [ ] Holdings grouped by Asset Class
+- [x] Columns: Name, Code, Units, Price (AUD), Value (AUD), Port%
+- [x] Holdings grouped by Asset Class
+- [x] Sticky NAME column (position: sticky, left: 0, z-index: 10)
+- [x] Shadow on sticky column when scrolled horizontally
 
 **Detailed Portfolio Table:**
-- [ ] Additional columns: Cost Base, Avg Unit Cost, Unrealised Gain/Loss ($), Unrealised Gain/Loss (%), Est. Income, Est. Yield
-- [ ] Gains colored green, losses colored red
+- [x] Additional columns: Cost Base, Avg Unit Cost, Unrealised Gain/Loss ($), Unrealised Gain/Loss (%), Est. Income, Est. Yield
+- [x] Gains colored green, losses colored red
+- [x] Subtotal rows with professional styling (bg-muted/50, font-semibold, border-t-2)
+- [x] Subtotal sticky cells with higher z-index (z-15) to prevent content bleed-through
 
 ### 4. Onboarding Modal
 - [ ] Triggers first time user clicks "Detailed View"
@@ -257,12 +262,15 @@ Verify these are used throughout (not hardcoded colors):
 - [ ] Mark as read / Mark all as read
 
 ### Part 5: Conversational AI Assistant
-- [ ] "Ask AI" button in header (teal for Retail, slate for Private)
-- [ ] Chat panel slides in from right
-- [ ] Message bubbles: User (right, colored), AI (left, gray)
-- [ ] Typing indicator with animated dots
-- [ ] Suggested questions shown initially
-- [ ] Clear conversation history button
+- [x] AI Assistant FAB (Floating Action Button) in bottom-right corner - single entry point for all AI features
+- [x] ~~"Ask AI" button in header~~ (REMOVED - consolidated into FAB)
+- [x] Chat panel slides in from right via Sheet component
+- [x] Message bubbles: User (right, colored), AI (left, gray)
+- [x] Typing indicator with animated dots
+- [x] Quick Actions section in FAB panel
+- [x] AI Insights section in FAB panel
+- [x] Updates/Notifications section in FAB panel
+- [x] Clear conversation history button
 
 **Capabilities:**
 - [ ] Portfolio Analysis: "How is [client]'s portfolio performing?"
