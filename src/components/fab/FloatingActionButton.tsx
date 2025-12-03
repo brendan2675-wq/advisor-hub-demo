@@ -75,7 +75,7 @@ export function FloatingActionButton() {
 
   return (
     <div 
-      className="fixed bottom-20 right-6 z-[60] flex flex-col items-end gap-2"
+      className="fixed bottom-28 right-6 z-[60] flex flex-col items-end gap-2"
       onMouseEnter={() => setIsExpanded(true)}
       onMouseLeave={() => setIsExpanded(false)}
     >
