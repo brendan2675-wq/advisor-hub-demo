@@ -62,8 +62,8 @@ export function HoldingsTable() {
   const columns = isDetailedView ? detailedColumns : compactColumns;
 
   const renderRow = (holding: HoldingWithCalculations) => (
-    <tr key={holding.id} className="border-b border-border hover:bg-muted/50 hover:border-l-2 hover:border-l-primary transition-all duration-100">
-      <td className="py-3 px-4 text-sm text-foreground font-medium">{holding.name}</td>
+    <tr key={holding.id} className="border-b border-border hover:bg-muted/50 transition-all duration-100 group">
+      <td className="py-3 px-4 text-sm text-foreground font-medium sticky left-0 z-10 bg-background group-hover:bg-muted/50 border-r border-border shadow-[2px_0_4px_-2px_rgba(0,0,0,0.1)] transition-colors duration-100">{holding.name}</td>
       <td className="py-3 px-4 text-sm text-muted-foreground font-mono">{holding.code}</td>
       <td className="py-3 px-4 text-sm text-foreground text-right tabular-nums">{formatNumber(holding.units)}</td>
       <td className="py-3 px-4 text-sm text-foreground text-right tabular-nums">{formatCurrency(holding.currentPrice)}</td>
@@ -114,6 +114,7 @@ export function HoldingsTable() {
                   key={col} 
                   className={cn(
                     "py-3 px-4 text-left whitespace-nowrap",
+                    idx === 0 && "sticky left-0 z-20 bg-surface border-r border-border shadow-[2px_0_4px_-2px_rgba(0,0,0,0.1)]",
                     idx >= 2 && "text-right"
                   )}
                 >
@@ -143,11 +144,11 @@ export function HoldingsTable() {
                   {/* Group Header */}
                   <tr className="bg-surface">
                     <td 
-                      colSpan={columns.length} 
-                      className="py-2.5 px-4 text-sm font-semibold text-foreground"
+                      className="py-2.5 px-4 text-sm font-semibold text-foreground sticky left-0 z-10 bg-surface border-r border-border shadow-[2px_0_4px_-2px_rgba(0,0,0,0.1)]"
                     >
                       {assetClass}
                     </td>
+                    <td colSpan={columns.length - 1} className="bg-surface"></td>
                   </tr>
                   
                   {/* Holdings */}
@@ -155,9 +156,10 @@ export function HoldingsTable() {
                   
                   {/* Group Subtotal */}
                   <tr className="bg-muted/30 border-b-2 border-border">
-                    <td className="py-2.5 px-4 text-sm font-medium text-muted-foreground" colSpan={4}>
+                    <td className="py-2.5 px-4 text-sm font-medium text-muted-foreground sticky left-0 z-10 bg-muted/30 border-r border-border shadow-[2px_0_4px_-2px_rgba(0,0,0,0.1)]">
                       Subtotal: {assetClass}
                     </td>
+                    <td className="py-2.5 px-4" colSpan={3}></td>
                     <td className="py-2.5 px-4 text-sm font-semibold text-foreground text-right tabular-nums">
                       {formatCurrency(totals.value)}
                     </td>
