@@ -84,7 +84,7 @@ export function AIInsightsPanel() {
           </div>
 
           {/* Greeting */}
-          <div className="px-4 py-3 bg-muted/50 border-b border-border/50">
+          <div className="px-4 py-3 bg-muted border-b border-border">
             <p className="text-sm text-muted-foreground">
               {getGreeting()}, viewing <span className="font-medium text-foreground">{selectedClient.name}</span>'s portfolio
             </p>
