@@ -79,7 +79,7 @@ export function HoldingsTable() {
   };
 
   return (
-    <div className="card-surface overflow-hidden">
+    <div className="card-surface overflow-hidden pb-32">
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
