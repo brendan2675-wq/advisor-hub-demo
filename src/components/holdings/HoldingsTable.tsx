@@ -142,53 +142,53 @@ export function HoldingsTable() {
                 return (
                   <React.Fragment key={assetClass}>
                   {/* Group Header */}
-                  <tr className="bg-surface">
+                  <tr className="bg-background border-b border-border">
                     <td 
-                      className="py-2.5 px-4 text-sm font-semibold text-foreground sticky left-0 z-10 bg-surface border-r border-border shadow-[2px_0_4px_-2px_rgba(0,0,0,0.1)]"
+                      className="py-3 px-4 text-sm font-medium text-foreground sticky left-0 z-[15] bg-background border-r border-border shadow-[2px_0_4px_-2px_rgba(0,0,0,0.1)]"
                     >
                       {assetClass}
                     </td>
-                    <td colSpan={columns.length - 1} className="bg-surface"></td>
+                    <td colSpan={columns.length - 1} className="bg-background"></td>
                   </tr>
                   
                   {/* Holdings */}
                   {groupHoldings.map(renderRow)}
                   
                   {/* Group Subtotal */}
-                  <tr className="bg-muted/30 border-b-2 border-border">
-                    <td className="py-2.5 px-4 text-sm font-medium text-muted-foreground sticky left-0 z-10 bg-muted/30 border-r border-border shadow-[2px_0_4px_-2px_rgba(0,0,0,0.1)]">
+                  <tr className="bg-muted/50 border-t-2 border-t-border border-b border-border relative z-[5]">
+                    <td className="py-4 px-4 pr-6 text-sm font-semibold text-foreground sticky left-0 z-[15] bg-muted/50 border-r-2 border-border shadow-[2px_0_4px_-2px_rgba(0,0,0,0.15)]">
                       Subtotal: {assetClass}
                     </td>
-                    <td className="py-2.5 px-4" colSpan={3}></td>
-                    <td className="py-2.5 px-4 text-sm font-semibold text-foreground text-right tabular-nums">
+                    <td className="py-4 px-4 bg-muted/50" colSpan={3}></td>
+                    <td className="py-4 px-4 text-sm font-semibold text-foreground text-right tabular-nums bg-muted/50">
                       {formatCurrency(totals.value)}
                     </td>
-                    <td className="py-2.5 px-4 text-sm font-semibold text-foreground text-right tabular-nums">
+                    <td className="py-4 px-4 text-sm font-semibold text-foreground text-right tabular-nums bg-muted/50">
                       {totals.portfolioPercent.toFixed(1)}%
                     </td>
                     
                     {isDetailedView && (
                       <>
-                        <td className="py-2.5 px-4 text-sm font-semibold text-foreground text-right tabular-nums">
+                        <td className="py-4 px-4 text-sm font-semibold text-foreground text-right tabular-nums bg-muted/50">
                           {formatCurrency(totals.costBase)}
                         </td>
-                        <td className="py-2.5 px-4"></td>
+                        <td className="py-4 px-4 bg-muted/50"></td>
                         <td className={cn(
-                          "py-2.5 px-4 text-sm font-semibold text-right tabular-nums",
+                          "py-4 px-4 text-sm font-semibold text-right tabular-nums bg-muted/50",
                           totals.unrealisedGainLoss >= 0 ? "text-gain" : "text-loss"
                         )}>
                           {formatCurrency(totals.unrealisedGainLoss)}
                         </td>
                         <td className={cn(
-                          "py-2.5 px-4 text-sm font-semibold text-right tabular-nums",
+                          "py-4 px-4 text-sm font-semibold text-right tabular-nums bg-muted/50",
                           unrealisedPercent >= 0 ? "text-gain" : "text-loss"
                         )}>
                           {formatPercent(unrealisedPercent)}
                         </td>
-                        <td className="py-2.5 px-4 text-sm font-semibold text-foreground text-right tabular-nums">
+                        <td className="py-4 px-4 text-sm font-semibold text-foreground text-right tabular-nums bg-muted/50">
                           {formatCurrency(totals.estimatedIncome)}
                         </td>
-                        <td className="py-2.5 px-4"></td>
+                        <td className="py-4 px-4 bg-muted/50"></td>
                       </>
                     )}
                   </tr>
