@@ -130,12 +130,12 @@ export function groupByAssetClass(holdings: HoldingWithCalculations[]): Record<s
 }
 
 export const columnTooltips: Record<string, string> = {
-  'Cost Base': 'Your original investment amount including brokerage and other acquisition costs.',
-  'Avg Unit Cost': 'The average price paid per unit based on your cost base.',
-  'Unrealised Gain/Loss ($)': 'The difference between current value and your cost base. Not yet realized as profit or loss.',
-  'Unrealised Gain/Loss (%)': 'Current performance compared to your purchase price, expressed as a percentage.',
-  'Est. Income': 'Projected annual income from dividends, distributions, or interest payments.',
-  'Est. Yield': 'Expected annual return as a percentage of the current investment value.',
-  'Port%': 'The percentage this holding represents of your total portfolio value.',
-  'Value (AUD)': 'Current market value calculated as units multiplied by current price.',
+  'Cost Base': 'Original investment including fees',
+  'Avg Unit Cost': 'Average price paid per unit',
+  'Unrealised Gain/Loss ($)': 'Unrealised profit or loss in dollars',
+  'Unrealised Gain/Loss (%)': 'Unrealised profit or loss as a percentage',
+  'Est. Income': 'Projected annual income',
+  'Est. Yield': 'Expected annual return percentage',
+  'Port%': 'Percentage of total portfolio',
+  'Value (AUD)': 'Current market value',
 };
