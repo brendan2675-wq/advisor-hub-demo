@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useCallback, ReactNode } fr
 import { ClientType, Client, clients } from '@/data/mockData';
 
 type ContextMode = 'retail' | 'private' | 'all';
+export type TabType = 'dashboard' | 'portfolio' | 'performance' | 'gains' | 'transactions' | 'details' | 'reports';
 
 interface AppContextType {
   contextMode: ContextMode;
@@ -25,6 +26,8 @@ interface AppContextType {
   grouping: 'assetClass' | 'account' | 'gics';
   setGrouping: (grouping: 'assetClass' | 'account' | 'gics') => void;
   filteredClients: Client[];
+  activeTab: TabType;
+  setActiveTab: (tab: TabType) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -44,6 +47,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [showHelpPanel, setShowHelpPanel] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [grouping, setGrouping] = useState<'assetClass' | 'account' | 'gics'>('assetClass');
+  const [activeTab, setActiveTab] = useState<TabType>('portfolio');
 
   const setContextMode = useCallback((mode: ContextMode) => {
     setContextModeState(mode);
@@ -89,6 +93,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
         grouping,
         setGrouping,
         filteredClients,
+        activeTab,
+        setActiveTab,
       }}
     >
       {children}

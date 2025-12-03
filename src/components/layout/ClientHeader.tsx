@@ -1,7 +1,7 @@
-import { useApp } from '@/context/AppContext';
+import { useApp, TabType } from '@/context/AppContext';
 import { cn } from '@/lib/utils';
 
-const tabs = [
+const tabs: { id: TabType; label: string }[] = [
   { id: 'dashboard', label: 'DASHBOARD' },
   { id: 'portfolio', label: 'PORTFOLIO' },
   { id: 'performance', label: 'PERFORMANCE' },
@@ -12,7 +12,7 @@ const tabs = [
 ];
 
 export function ClientHeader() {
-  const { selectedClient, contextMode } = useApp();
+  const { selectedClient, contextMode, activeTab, setActiveTab } = useApp();
   
   // Get initials from client name
   const getInitials = (name: string) => {
@@ -49,9 +49,10 @@ export function ClientHeader() {
           {tabs.map(tab => (
             <button
               key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
               className={cn(
                 "px-3 py-2 text-xs font-medium tracking-wide transition-colors duration-200 relative",
-                tab.id === 'portfolio' 
+                tab.id === activeTab 
                   ? "text-primary after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-primary" 
                   : "text-muted-foreground hover:text-foreground"
               )}
