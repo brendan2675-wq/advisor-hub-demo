@@ -7,6 +7,7 @@ import { PortfolioHero } from '@/components/holdings/PortfolioHero';
 import { OnboardingModal } from '@/components/onboarding/OnboardingModal';
 import { TourPopover } from '@/components/onboarding/TourPopover';
 import { HelpPanel } from '@/components/help/HelpPanel';
+import { SmartSuggestionBanner } from '@/components/banners/SmartSuggestionBanner';
 import { DashboardTab } from '@/components/tabs/DashboardTab';
 import { PerformanceTab } from '@/components/tabs/PerformanceTab';
 import { GainsLossesTab } from '@/components/tabs/GainsLossesTab';
@@ -51,7 +52,9 @@ function DashboardContent() {
       <Header />
       <ClientHeader />
       
-      <main className="p-6 overflow-auto">
+      <SmartSuggestionBanner />
+      
+      <main className="p-6 pt-0 overflow-auto">
         <div className="max-w-[1600px] mx-auto">
           {renderTabContent()}
         </div>
