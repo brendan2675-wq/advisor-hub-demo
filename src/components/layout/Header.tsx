@@ -3,7 +3,6 @@ import { useApp } from '@/context/AppContext';
 import dashLogo from '@/assets/dash-logo.png';
 import { SmartSearch } from '@/components/search/SmartSearch';
 import { NotificationCenter } from '@/components/notifications/NotificationCenter';
-import { ConversationalAI } from '@/components/ai/ConversationalAI';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -62,7 +61,6 @@ export function Header() {
 
       {/* Right Icons */}
       <div className="flex items-center gap-2 flex-shrink-0">
-        <ConversationalAI />
         <NotificationCenter />
         <button className="btn-icon">
           <User className="w-5 h-5 text-muted-foreground" />
