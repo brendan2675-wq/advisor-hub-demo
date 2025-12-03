@@ -3,6 +3,7 @@ export type ClientType = 'retail' | 'private';
 export interface Client {
   id: string;
   name: string;
+  email: string;
   type: ClientType;
   totalPortfolioValue: number;
 }
@@ -31,18 +32,21 @@ export const clients: Client[] = [
   {
     id: 'client-1',
     name: 'John Smith',
+    email: 'john.smith@email.com',
     type: 'retail',
     totalPortfolioValue: 4166250,
   },
   {
     id: 'client-2',
     name: 'Sarah Chen',
+    email: 'sarah.chen@privatewealth.com',
     type: 'private',
     totalPortfolioValue: 8425000,
   },
   {
     id: 'client-3',
     name: 'Michael Roberts',
+    email: 'michael.roberts@email.com',
     type: 'retail',
     totalPortfolioValue: 2150000,
   },
