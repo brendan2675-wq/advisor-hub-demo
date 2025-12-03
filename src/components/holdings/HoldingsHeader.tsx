@@ -1,4 +1,4 @@
-import { Calendar, ChevronDown, Download, ToggleLeft, ToggleRight } from 'lucide-react';
+import { Calendar, ChevronDown, Download, ToggleLeft, ToggleRight, FileText } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
 import { clients, Client } from '@/data/mockData';
 import {
@@ -19,6 +19,7 @@ export function HoldingsHeader() {
     grouping,
     setGrouping,
     filteredClients,
+    showToast,
   } = useApp();
 
   const handleViewToggle = () => {
@@ -116,6 +117,15 @@ export function HoldingsHeader() {
           <span className="text-sm font-medium">
             {isDetailedView ? 'Detailed View' : 'Compact View'}
           </span>
+        </button>
+
+        {/* Generate Report Button */}
+        <button
+          onClick={() => showToast('Generating performance report...')}
+          className="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-border hover:bg-muted transition-colors duration-200"
+        >
+          <FileText className="w-4 h-4 text-muted-foreground" />
+          <span className="text-sm font-medium text-foreground">Generate Report</span>
         </button>
 
         {/* Export Button */}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FileText, Calculator, BarChart3, Download, Mail, TrendingUp, Percent, Calendar, FileSpreadsheet } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useApp, TabType } from '@/context/AppContext';
@@ -53,11 +53,26 @@ const tabConfigs: Partial<Record<TabType, FABConfig>> = {
   },
 };
 
+// Tabs that show tables where FAB should move to left
+const tableViewTabs: TabType[] = ['portfolio', 'gains'];
+
 export function FloatingActionButton() {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [showTip, setShowTip] = useState(false);
   const { activeTab, contextMode, showToast } = useApp();
 
   const config = tabConfigs[activeTab];
+  const isTableView = tableViewTabs.includes(activeTab);
+
+  // Show repositioning tip once
+  useEffect(() => {
+    const tipShown = localStorage.getItem('fab-repositioning-tip-shown');
+    if (!tipShown && isTableView) {
+      setShowTip(true);
+      localStorage.setItem('fab-repositioning-tip-shown', 'true');
+      setTimeout(() => setShowTip(false), 2000);
+    }
+  }, [isTableView]);
 
   // Don't render if no config for this tab
   if (!config) return null;
@@ -75,10 +90,22 @@ export function FloatingActionButton() {
 
   return (
     <div 
-      className="fixed bottom-28 right-6 z-[60] flex flex-col items-end gap-2"
+      className={cn(
+        "fixed z-20 flex flex-col gap-2 transition-all duration-300",
+        isTableView 
+          ? "bottom-6 left-24 items-start" 
+          : "bottom-28 right-6 items-end"
+      )}
       onMouseEnter={() => setIsExpanded(true)}
       onMouseLeave={() => setIsExpanded(false)}
     >
+      {/* Repositioning Tip */}
+      {showTip && (
+        <div className="absolute -top-12 left-0 right-0 bg-foreground text-background text-xs px-3 py-2 rounded-lg shadow-lg animate-fade-in whitespace-nowrap">
+          Repositioned to avoid blocking data
+        </div>
+      )}
+
       {/* Expanded Action Buttons */}
       <div className={cn(
         "flex flex-col gap-2 transition-all duration-300",

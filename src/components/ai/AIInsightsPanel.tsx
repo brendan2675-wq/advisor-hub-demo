@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Sparkles, X, ChevronDown, Settings, ThumbsUp, Clock, Ban, ChevronRight } from 'lucide-react';
-import { useApp } from '@/context/AppContext';
+import { useApp, TabType } from '@/context/AppContext';
 import { cn } from '@/lib/utils';
 import { useAIInsights, Insight } from '@/hooks/useAIInsights';
+
+// Tabs that show tables where panel should move to left
+const tableViewTabs: TabType[] = ['portfolio', 'gains'];
 
 export function AIInsightsPanel() {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -10,6 +13,8 @@ export function AIInsightsPanel() {
   const [expandedInsight, setExpandedInsight] = useState<string | null>(null);
   const { contextMode, activeTab, selectedClient } = useApp();
   const { insights, dismissInsight, markHelpful, neverShowAgain } = useAIInsights();
+
+  const isTableView = tableViewTabs.includes(activeTab);
 
   useEffect(() => {
     if (insights.length > 0) {
@@ -25,7 +30,12 @@ export function AIInsightsPanel() {
   const isPrivate = contextMode === 'private';
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className={cn(
+      "fixed z-30 transition-all duration-300",
+      isTableView
+        ? "bottom-6 left-6"
+        : "bottom-6 right-6"
+    )}>
       {/* Collapsed State - Floating Button */}
       {!isExpanded && (
         <button
