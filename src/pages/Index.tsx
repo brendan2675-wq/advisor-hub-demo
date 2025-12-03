@@ -13,8 +13,7 @@ import { GainsLossesTab } from '@/components/tabs/GainsLossesTab';
 import { TransactionsTab } from '@/components/tabs/TransactionsTab';
 import { DetailsTab } from '@/components/tabs/DetailsTab';
 import { ReportsTab } from '@/components/tabs/ReportsTab';
-import { AIInsightsPanel } from '@/components/ai/AIInsightsPanel';
-import { FloatingActionButton } from '@/components/fab/FloatingActionButton';
+import { AIAssistantPanel } from '@/components/ai/AIAssistantPanel';
 import { AppProvider, useApp } from '@/context/AppContext';
 
 function DashboardContent() {
@@ -63,8 +62,7 @@ function DashboardContent() {
       <OnboardingModal />
       <TourPopover />
       <HelpPanel />
-      <FloatingActionButton />
-      <AIInsightsPanel />
+      <AIAssistantPanel />
     </div>
   );
 }
