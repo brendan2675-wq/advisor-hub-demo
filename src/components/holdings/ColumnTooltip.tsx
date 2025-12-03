@@ -1,6 +1,11 @@
-import { useState } from 'react';
 import { Info } from 'lucide-react';
 import { columnTooltips } from '@/data/mockData';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 interface ColumnTooltipProps {
   columnName: string;
@@ -8,7 +13,6 @@ interface ColumnTooltipProps {
 }
 
 export function ColumnTooltip({ columnName, children }: ColumnTooltipProps) {
-  const [showTooltip, setShowTooltip] = useState(false);
   const tooltipText = columnTooltips[columnName];
 
   if (!tooltipText) {
@@ -16,23 +20,21 @@ export function ColumnTooltip({ columnName, children }: ColumnTooltipProps) {
   }
 
   return (
-    <div 
-      className="relative inline-flex items-center gap-1 cursor-help"
-      onMouseEnter={() => setShowTooltip(true)}
-      onMouseLeave={() => setShowTooltip(false)}
-      id={`column-${columnName.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
-    >
-      {children}
-      <Info className="w-3 h-3 text-muted-foreground/60" />
-      
-      {showTooltip && (
-        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-50 animate-fade-in">
-          <div className="tooltip-content">
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 rotate-45 w-2 h-2 bg-foreground" />
-            {tooltipText}
+    <TooltipProvider delayDuration={200}>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div 
+            className="inline-flex items-center gap-1 cursor-help"
+            id={`column-${columnName.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
+          >
+            {children}
+            <Info className="w-3 h-3 text-muted-foreground/60" />
           </div>
-        </div>
-      )}
-    </div>
+        </TooltipTrigger>
+        <TooltipContent className="max-w-xs">
+          {tooltipText}
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }
