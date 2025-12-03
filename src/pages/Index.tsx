@@ -1,8 +1,9 @@
 import { Header } from '@/components/layout/Header';
-import { Sidebar } from '@/components/layout/Sidebar';
+import { ClientHeader } from '@/components/layout/ClientHeader';
 import { Toast } from '@/components/layout/Toast';
 import { HoldingsHeader } from '@/components/holdings/HoldingsHeader';
 import { HoldingsTable } from '@/components/holdings/HoldingsTable';
+import { PortfolioHero } from '@/components/holdings/PortfolioHero';
 import { OnboardingModal } from '@/components/onboarding/OnboardingModal';
 import { TourPopover } from '@/components/onboarding/TourPopover';
 import { HelpPanel } from '@/components/help/HelpPanel';
@@ -14,24 +15,15 @@ function DashboardContent() {
   return (
     <div className={`min-h-screen bg-surface transition-colors duration-300 ${contextMode === 'private' ? 'context-private' : ''}`}>
       <Header />
+      <ClientHeader />
       
-      <div className="flex h-[calc(100vh-4rem)]">
-        <Sidebar activeItem="holdings" />
-        
-        <main className="flex-1 p-6 overflow-auto">
-          <div className="max-w-[1600px] mx-auto">
-            <div className="mb-6">
-              <h1 className="text-2xl font-bold text-foreground">Portfolio Holdings</h1>
-              <p className="text-sm text-muted-foreground mt-1">
-                View and analyze client portfolio positions
-              </p>
-            </div>
-            
-            <HoldingsHeader />
-            <HoldingsTable />
-          </div>
-        </main>
-      </div>
+      <main className="p-6 overflow-auto">
+        <div className="max-w-[1600px] mx-auto">
+          <PortfolioHero />
+          <HoldingsHeader />
+          <HoldingsTable />
+        </div>
+      </main>
       
       {/* Overlays */}
       <Toast />
