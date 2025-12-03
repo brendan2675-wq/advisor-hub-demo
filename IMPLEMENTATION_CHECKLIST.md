@@ -189,8 +189,113 @@ Verify these are used throughout (not hardcoded colors):
 
 ---
 
+## Agentic AI Features
+
+### Part 1: AI Insights Panel
+- [ ] Floating button in bottom-right corner with sparkle icon
+- [ ] Notification dot when new insights available
+- [ ] Expands to ~400px wide panel on click
+- [ ] Gradient header (teal/blue for Retail, slate for Private)
+- [ ] Shows greeting with selected client name
+- [ ] Scrollable insights list
+
+**Insight Types:**
+- [ ] Portfolio Health Alerts (concentration, performance, income opportunities)
+- [ ] Tax Optimization Suggestions (harvest opportunities, CGT discount)
+- [ ] Contextual Feature Recommendations (grouping tips, benchmark views)
+- [ ] Client Action Items (quarterly reviews)
+- [ ] Predictive Analytics (projections for Private clients)
+
+**Insight Interactions:**
+- [ ] "Helpful 👍" button
+- [ ] "Not now" dismiss button
+- [ ] "Don't show" never show again button
+- [ ] "Explain" expands with detailed explanation
+- [ ] Priority badges (high/medium/low with colors)
+
+**Context Awareness:**
+- [ ] Insights change based on active tab
+- [ ] Different insights for Retail vs Private clients
+- [ ] Persists dismissed/never-show preferences in localStorage
+
+### Part 2: Smart Search with Intent Detection
+- [ ] Search bar in header with placeholder text
+- [ ] Keyboard shortcut: Cmd/Ctrl + K to focus
+- [ ] Shows recent searches when empty
+- [ ] Shows suggested queries when focused
+
+**Intent Detection:**
+- [ ] FILTER intent: "clients with losses over 10%"
+- [ ] CLIENT + SECTOR intent: "show me john's tech stocks"
+- [ ] ANALYSIS intent: "who needs rebalancing?"
+- [ ] TAX intent: "tax loss candidates"
+- [ ] HELP intent: "explain unrealised gains"
+- [ ] PERFORMANCE intent: "what happened to sarah's portfolio?"
+
+**Search Results:**
+- [ ] Categorized results (Clients, Holdings, Actions)
+- [ ] AI Insight summary with actionable buttons
+- [ ] Loading state with "Analyzing..." animation
+- [ ] Click results to navigate or execute actions
+
+### Part 3: Intelligent Notifications Center
+- [ ] Bell icon in header with unread badge count
+- [ ] Slides in from right as Sheet panel
+- [ ] Three tabs: "For You" (AI-filtered), "All", "Archived"
+- [ ] Daily digest summary at top
+
+**Notification Types:**
+- [ ] Critical (red dot): Compliance due, market movement, security alerts
+- [ ] Important (orange dot): Follow-ups, rebalancing, tax opportunities
+- [ ] Informational (blue dot): Milestones, features, market insights
+
+**AI Features:**
+- [ ] Smart grouping (e.g., "5 clients need reviews" instead of 5 separate)
+- [ ] Contextual quick actions on each notification
+- [ ] Learning from behavior (dismissed categories hidden)
+- [ ] Archive/unarchive functionality
+- [ ] Mark as read / Mark all as read
+
+### Part 5: Conversational AI Assistant
+- [ ] "Ask AI" button in header (teal for Retail, slate for Private)
+- [ ] Chat panel slides in from right
+- [ ] Message bubbles: User (right, colored), AI (left, gray)
+- [ ] Typing indicator with animated dots
+- [ ] Suggested questions shown initially
+- [ ] Clear conversation history button
+
+**Capabilities:**
+- [ ] Portfolio Analysis: "How is [client]'s portfolio performing?"
+- [ ] Tax Planning: "Show me tax harvest opportunities"
+- [ ] Workflow Assistance: "Which clients need reviews?"
+- [ ] Rebalancing: "Who needs rebalancing?"
+- [ ] Market Impact: "How did today's market affect portfolios?"
+- [ ] Help/Education: "What can you help me with?"
+
+**AI Responses Include:**
+- [ ] Markdown formatting (bold text)
+- [ ] Emoji visual hierarchy
+- [ ] Actionable buttons (Generate Report, Navigate, Schedule)
+- [ ] Context-aware based on selected client
+
+---
+
+## AI Feature Files Created
+
+- `src/components/ai/AIInsightsPanel.tsx` - Floating insights widget
+- `src/components/ai/ConversationalAI.tsx` - Chat assistant interface
+- `src/components/search/SmartSearch.tsx` - Intent-detecting search bar
+- `src/components/notifications/NotificationCenter.tsx` - Notification panel
+- `src/hooks/useAIInsights.ts` - Insights generation and state
+- `src/hooks/useSmartSearch.ts` - Search logic and intent detection
+- `src/hooks/useNotifications.ts` - Notification management
+- `src/hooks/useConversationalAI.ts` - Chat response generation
+
+---
+
 ## Interview Demo Flow
 
+### Core Features Demo
 1. Start in compact view: "This is the familiar portfolio view"
 2. Toggle to detailed: Show onboarding modal
 3. Complete tour: Guide through new features
@@ -198,3 +303,14 @@ Verify these are used throughout (not hardcoded colors):
 5. Open help panel: Click (?) icon
 6. Switch contexts: Retail → Private, note color change + toast
 7. Navigate tabs: Show Dashboard, Performance, etc.
+
+### AI Features Demo
+8. Click AI Insights button (sparkle): Show proactive insights panel
+9. Demonstrate insight actions: Helpful, Dismiss, Explain
+10. Use Smart Search: Try "clients with losses" or "tax harvest opportunities"
+11. Show keyboard shortcut: Cmd/Ctrl + K
+12. Open Notifications: Click bell icon, show For You vs All tabs
+13. Click "Ask AI" button: Demonstrate conversational assistant
+14. Ask: "How is the portfolio performing?" - show contextual response
+15. Ask: "Show tax harvest opportunities" - show cross-client analysis
+16. Click action buttons in AI response to navigate
